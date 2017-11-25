@@ -22,4 +22,5 @@ WIP
 
 ## 使い方
 ソースコード内のTOUCH_SCREEN_MIN_X、TOUCH_SCREEN_MIN_Y、TOUCH_SCREEN_MAX_X、TOUCH_SCREEN_MAX_Yはタッチスクリーンに合わせて設定する必要があります。
+
 数字（0〜9）を手書きで書くと、認識されます。
