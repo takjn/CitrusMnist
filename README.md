@@ -2,8 +2,11 @@
 
 WIP
 
+![Overview](https://raw.githubusercontent.com/takjn/CitrusMnist/master/overview.jpg)
+
 手書き数字認識のサンプルプログラムです。
 [e-AIトランスレータ チュートリアル](http://gadget.renesas.com/ja/product/e-ai/mnist_tutorial.html)を動かしてみました。
+
 
 ## 部品表
 |部品|数|備考|
