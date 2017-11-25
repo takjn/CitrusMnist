@@ -1,0 +1,11 @@
+# GR build files
+gr_build/*
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.su
+
+.vscode
