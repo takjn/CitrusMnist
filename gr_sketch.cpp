@@ -29,6 +29,7 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define TOUCH_SCREEN_MAX_Y 520
 
 #define TOUCH_SCREEN_GRID 14
+#define THRESHOLD 0.5
 
 int buffer[TOUCH_SCREEN_GRID][TOUCH_SCREEN_GRID];
 int mode = 0;
@@ -86,7 +87,7 @@ int prediction() {
     	Serial.print(i); Serial.print(":");
     	Serial.println(prediction[i]);
     	
-    	if (prediction[i] > 0.7) {
+    	if (prediction[i] > THRESHOLD) {
     	    ret = i;
     	}
     }
