@@ -15,6 +15,13 @@ TPrecision* dnn_compute(TPrecision* input_img);
 }
 #endif
 
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <FreeMono24pt7b.h>
+
+#define OLED_RESET 4
+Adafruit_SSD1306 display(OLED_RESET);
 
 #define TOUCH_SCREEN_MIN_X 110
 #define TOUCH_SCREEN_MIN_Y 90
@@ -56,6 +63,10 @@ void setup()
 {
     Serial.begin(115200);
     ts_Reset();
+
+    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
+    display.clearDisplay();
+    display.display();
 }
 
 int prediction() {
@@ -87,7 +98,7 @@ void loop()
   int x, y;
  
   x = ts_ReadXPosition();   // eat
-  delay(4);                 // sleep
+  delay(1);                 // sleep
   y = ts_ReadYPosition();   // eat
   
   if (x<TOUCH_SCREEN_MIN_X || y<TOUCH_SCREEN_MIN_Y) {
@@ -107,33 +118,49 @@ void loop()
                 for (int x=0; x<TOUCH_SCREEN_GRID; x++) {
                     for (int q=0; q<(28 / TOUCH_SCREEN_GRID); q++) {
                         data_in[i++] = buffer[y][x];
+
+                        if (buffer[y][x]) {
+                            display.drawPixel(x, y, WHITE);
+                        }
                     }
                 }
             }
         }
         int ret = prediction();
+
+        // print result
+        display.setTextColor(WHITE);
+        display.setFont(&FreeMono24pt7b);
+        display.setTextSize(2);
+        display.setCursor(36, 60);
+
         if (ret < 0) {
             Serial.println("cannot detect.");
+            display.print("-");
         }
         else {
             Serial.println();
             Serial.print("result: ");
             Serial.println(ret);
+            display.print(ret);
         }
+
+        display.display();
       } 
     }
   }
   else {
     if (mode == 0) {
-      clearBuffer();
-      mode = 1;
+        clearBuffer();
+        display.clearDisplay();
+        mode = 1;
     }
     interval = 0;
 
-    Serial.print(x, DEC);
-    Serial.print(", ");
-    Serial.print(y, DEC);
-    Serial.println();
+    // Serial.print(x, DEC);
+    // Serial.print(", ");
+    // Serial.print(y, DEC);
+    // Serial.println();
     
     int tx = map(x, TOUCH_SCREEN_MIN_X, TOUCH_SCREEN_MAX_X, 0, TOUCH_SCREEN_GRID - 1);
     int ty = map(y, TOUCH_SCREEN_MIN_Y, TOUCH_SCREEN_MAX_Y, TOUCH_SCREEN_GRID - 1, 0);
