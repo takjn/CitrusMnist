@@ -135,9 +135,8 @@ void loop()
     Serial.print(y, DEC);
     Serial.println();
     
-//    int tx = map(x, TOUCH_SCREEN_MIN_X, TOUCH_SCREEN_MAX_X, 0, TOUCH_SCREEN_GRID - 1);
-    int tx = map(x, TOUCH_SCREEN_MIN_X, TOUCH_SCREEN_MAX_X, TOUCH_SCREEN_GRID - 1, 0);
-    int ty = map(y, TOUCH_SCREEN_MIN_Y, TOUCH_SCREEN_MAX_Y, 0, TOUCH_SCREEN_GRID - 1);
+    int tx = map(x, TOUCH_SCREEN_MIN_X, TOUCH_SCREEN_MAX_X, 0, TOUCH_SCREEN_GRID - 1);
+    int ty = map(y, TOUCH_SCREEN_MIN_Y, TOUCH_SCREEN_MAX_Y, TOUCH_SCREEN_GRID - 1, 0);
     buffer[ty][tx] = 1;
   }
 }
